@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produto | JC Informática – Nova Petrópolis, RS</title>
+  <meta name="description" content="Confira os detalhes e especificações do produto na JC Informática. Pronta entrega e atendimento no WhatsApp em Nova Petrópolis, RS." />
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="imagem/logo.svg" />
+  <link rel="apple-touch-icon" href="imagem/SIMBOLO BRANCO.png" />
+  
+  <link rel="stylesheet" href="css/style.css?v=23" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="JC Informática Home">
+        <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+      </a>
+
+      <nav id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/#servicos">Serviços</a></li>
+          <li><a href="/#gamer">Gamer</a></li>
+          <li><a href="/#builds">Builds</a></li>
+          <li><a href="produtos">Produtos &amp; Loja</a></li>
+          <li><a href="/#automacao">Automação</a></li>
+          <li><a href="/#sobre">Sobre</a></li>
+          <li><a href="contato" class="nav-cta">Contato</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== PRODUCT DETAIL CONTAINER (RENDERIZADO VIA ES6) ========== -->
+  <main id="product-detail-container">
+    <div class="container" style="padding: 120px 0; text-align: center;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 36px; color: var(--blue);"></i>
+      <p style="margin-top: 12px; color: var(--gray);">Carregando especificações do produto...</p>
+    </div>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="JC Informática">
+          <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+        </a>
+        <p>Soluções completas em informática para você e sua empresa em Nova Petrópolis, RS.</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/jcinformatica.br" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/jcinformaticanp/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/555432814464" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="produtos">Catálogo de Produtos</a></li>
+          <li><a href="/#servicos">Assistência Técnica</a></li>
+          <li><a href="/#gamer">Setups Gamer</a></li>
+          <li><a href="admin">Painel Admin</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="/#sobre">Sobre Nós</a></li>
+          <li><a href="/#depoimentos">Depoimentos</a></li>
+          <li><a href="contato">Contato</a></li>
+          <li><a href="politica-de-privacidade">Política de Privacidade</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Atendimento</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> Av. 15 de Novembro, 1540 – Sala 110, Centro, Nova Petrópolis – RS</li>
+          <li><i class="fas fa-phone"></i> (54) 3281-4464</li>
+          <li><i class="fas fa-envelope"></i> contato@jcinformatica.net.br</li>
+          <li><i class="fas fa-clock"></i> Seg–Sex: 9h–12h / 13h20–18h30 | Sáb: 8h30–12h / 13h30–16h</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 JC Informática. Todos os direitos reservados.</p>
+        <p><a href="https://www.jcinformatica.net.br" target="_blank">www.jcinformatica.net.br</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Premium Widget -->
+  <div id="wa-widget-container">
+    <button id="wa-widget-toggle" aria-label="Abrir chat do WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </button>
+  </div>
+
+  <script src="js/main.js?v=23"></script>
+  <script type="module">
+    import { ProductDetailEngine } from './js/modules/product-detail.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      new ProductDetailEngine();
+    });
+  </script>
+</body>
+</html>

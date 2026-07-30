@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monte seu PC Gamer | JC Informática – Nova Petrópolis, RS</title>
+  <meta name="description" content="Configure seu PC Gamer personalizado peça a peça com cálculo de consumo em Watts, suporte a parcelamento e orçamento instantâneo pelo WhatsApp!" />
+  
+  <link rel="icon" type="image/svg+xml" href="imagem/logo.svg" />
+  <link rel="stylesheet" href="css/style.css?v=25" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="JC Informática Home">
+        <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+      </a>
+
+      <nav id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="produtos">Produtos &amp; Loja</a></li>
+          <li><a href="monte-seu-pc" class="active">Monte seu PC</a></li>
+          <li><a href="marcas">Marcas</a></li>
+          <li><a href="contato" class="nav-cta">Contato</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== HERO MONTE SEU PC ========== -->
+  <section class="page-hero catalog-hero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+      <div class="hero-badge" style="margin: 0 auto 16px auto; width: fit-content;">
+        <span class="badge-dot"></span>
+        <i class="fas fa-desktop"></i>&nbsp; Montagem Profissional em Nova Petrópolis
+      </div>
+      <h1>Configurador de <span class="accent">PC Gamer</span></h1>
+      <p>Escolha cada componente do seu computador sob medida. O sistema calcula a compatibilidade, a fonte necessária e gera seu orçamento em 1 clique no WhatsApp!</p>
+    </div>
+  </section>
+
+  <!-- ========== MAIN BUILDER SECTION ========== -->
+  <section class="pc-builder-section" style="padding: 60px 0 100px 0;">
+    <div class="container" id="pc-builder-container">
+      <div style="text-align: center; padding: 60px 0; color: var(--gray);">
+        <i class="fas fa-spinner fa-spin" style="font-size: 36px; color: var(--blue);"></i>
+        <p style="margin-top: 12px;">Carregando componentes do configurador...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="JC Informática">
+          <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+        </a>
+        <p>Soluções completas em informática para você e sua empresa em Nova Petrópolis, RS.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="produtos">Catálogo de Produtos</a></li>
+          <li><a href="monte-seu-pc">Monte seu PC</a></li>
+          <li><a href="marcas">Marcas Parceiras</a></li>
+          <li><a href="admin">Painel Admin</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Atendimento</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> Av. 15 de Novembro, 1540 – Sala 110, Centro, Nova Petrópolis – RS</li>
+          <li><i class="fas fa-phone"></i> (54) 3281-4464</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=25"></script>
+  <script type="module">
+    import { PCBuilderEngine } from './js/modules/pc-builder.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      new PCBuilderEngine();
+    });
+  </script>
+</body>
+</html>

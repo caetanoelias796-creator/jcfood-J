@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Verifica se o usuário está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: Verifica se o usuário é administrador oficial da JC Informática
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.email == "contato@jcinformatica.net.br" || request.auth.token.admin == true);
+    }
+
+    // Coleção: PRODUTOS (Público para Leitura, Admin para Escrita)
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: CATEGORIAS (Público para Leitura, Admin para Escrita)
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: MARCAS (Público para Leitura, Admin para Escrita)
+    match /brands/{brandId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: BANNERS (Público para Leitura, Admin para Escrita)
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: PÁGINAS INSTITUCIONAIS (Público para Leitura, Admin para Escrita)
+    match /pages/{pageId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: CONFIGURAÇÕES GLOBAIS (Público para Leitura, Admin para Escrita)
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Coleção: USUÁRIOS (Proprietário ou Admin)
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin() || (isAuthenticated() && request.auth.uid == userId);
+    }
+
+  }
+}

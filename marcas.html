@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcas Parceiras | JC Informática – Nova Petrópolis, RS</title>
+  <meta name="description" content="Conheça as principais marcas de hardware, periféricos gamer e conectividade disponíveis na JC Informática. Redragon, Kingston, NZXT, TP-Link e muito mais!" />
+  
+  <link rel="icon" type="image/svg+xml" href="imagem/logo.svg" />
+  <link rel="stylesheet" href="css/style.css?v=25" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="JC Informática Home">
+        <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+      </a>
+
+      <nav id="main-nav" aria-label="Navegação principal">
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="produtos">Produtos &amp; Loja</a></li>
+          <li><a href="monte-seu-pc">Monte seu PC</a></li>
+          <li><a href="marcas" class="active">Marcas</a></li>
+          <li><a href="contato" class="nav-cta">Contato</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== HERO MARCAS ========== -->
+  <section class="page-hero catalog-hero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+      <div class="hero-badge" style="margin: 0 auto 16px auto; width: fit-content;">
+        <span class="badge-dot"></span>
+        <i class="fas fa-copyright"></i>&nbsp; Distribuidores Oficiais
+      </div>
+      <h1>Marcas <span class="accent">Parceiras</span></h1>
+      <p>Trabalhamos apenas com as melhores marcas de tecnologia, periféricos gamer e redes do mercado global com garantia oficial.</p>
+    </div>
+  </section>
+
+  <!-- ========== BRANDS GRID SECTION ========== -->
+  <section class="brands-showcase-section" style="padding: 60px 0 100px 0;">
+    <div class="container">
+      <div class="brands-grid" id="brands-showcase-grid">
+        <!-- RENDERIZADO VIA JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="JC Informática">
+          <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
+        </a>
+        <p>Soluções completas em informática para você e sua empresa em Nova Petrópolis, RS.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="produtos">Catálogo de Produtos</a></li>
+          <li><a href="monte-seu-pc">Monte seu PC</a></li>
+          <li><a href="marcas">Marcas</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=25"></script>
+  <script type="module">
+    import { ProductStore } from './js/modules/firebase-config.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('brands-showcase-grid');
+      if (!grid) return;
+
+      const products = ProductStore.getActiveProducts();
+      const brandCounts = {};
+      products.forEach(p => {
+        if (p.marca) {
+          brandCounts[p.marca] = (brandCounts[p.marca] || 0) + 1;
+        }
+      });
+
+      let html = '';
+      Object.entries(brandCounts).forEach(([marca, count]) => {
+        html += `
+          <a href="produtos.html?brand=${encodeURIComponent(marca)}" class="brand-card-item">
+            <div class="brand-card-icon"><i class="fas fa-microchip"></i></div>
+            <h3>${marca}</h3>
+            <span class="brand-prod-count">${count} produto(s) disponível(is)</span>
+            <span class="btn btn-outline" style="margin-top: 12px; font-size: 12px; padding: 6px 14px;">Ver Produtos</span>
+          </a>
+        `;
+      });
+
+      grid.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
