@@ -284,6 +284,7 @@ export class CatalogEngine {
           <div class="product-info">
             <div class="product-tags-row">
               <span class="brand-badge">${prodBrand}</span>
+              <span class="ref-code-badge" style="font-size: 11px; font-weight: 700; color: var(--blue-light); background: rgba(0, 55, 255, 0.12); padding: 2px 7px; border-radius: 6px;">Ref: ${p.codigo || p.sku || '-'}</span>
               ${p.categoria ? `<span class="subcat-tag-badge">${p.categoria}</span>` : ''}
             </div>
 

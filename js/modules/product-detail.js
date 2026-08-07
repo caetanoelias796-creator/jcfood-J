@@ -87,8 +87,9 @@ export class ProductDetailEngine {
 
     const pageUrl = window.location.href;
 
-    // Mensagem automática para WhatsApp
-    const waTextRaw = `Olá! Tenho interesse no produto:\n\n*${prodName}*\nMarca: ${prodBrand}\nDisponibilidade: ${prodStock}\n\nConfira no catálogo digital: ${pageUrl}`;
+    const refCode = p.codigo || p.sku || '-';
+    // Mensagem automática para WhatsApp com Código de Referência
+    const waTextRaw = `Olá! Tenho interesse no produto:\n\n*${prodName}*\n📌 Referência (Ref): ${refCode}\n🏷️ Marca: ${prodBrand}\n✅ Disponibilidade: ${prodStock}\n\nConfira no catálogo digital: ${pageUrl}`;
     const waUrl = `https://wa.me/555432814464?text=${encodeURIComponent(waTextRaw)}`;
 
     this.container.innerHTML = `
@@ -137,6 +138,9 @@ export class ProductDetailEngine {
             <div class="product-header-info">
               <div class="product-tags-row">
                 <span class="brand-badge"><i class="fas fa-tag"></i> ${prodBrand}</span>
+                <span class="ref-code-badge" style="font-size: 12px; font-weight: 700; color: var(--blue-light); background: rgba(0, 55, 255, 0.15); padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(0, 55, 255, 0.3);">
+                  <i class="fas fa-barcode"></i> Ref: ${refCode}
+                </span>
                 <span class="stock-status-badge ${isPreOrder ? 'pre-order' : 'in-stock'}">
                   <i class="fas ${isPreOrder ? 'fa-clock' : 'fa-check'}"></i> ${prodStock}
                 </span>
