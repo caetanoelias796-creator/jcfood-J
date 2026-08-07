@@ -177,36 +177,6 @@ export class ProductDetailEngine {
               </a>
             </div>
 
-            <!-- COMPARTILHAMENTO E FERRAMENTAS PARA EQUIPE DE VENDAS -->
-            <div class="social-share-row">
-              <span class="share-label"><i class="fas fa-share-alt"></i> Enviar produto ao cliente:</span>
-              <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Olá! Confira este produto em nossa vitrine digital JC Informática:\n\n*' + prodName + '*\nMarca: ' + prodBrand + '\n' + pageUrl)}" target="_blank" rel="noopener" class="share-btn share-wa" title="Enviar direto pelo WhatsApp">
-                <i class="fab fa-whatsapp"></i> Enviar WhatsApp
-              </a>
-              <button type="button" id="copy-product-link-btn" class="share-btn share-copy" title="Copiar Link para envio">
-                <i class="fas fa-link"></i> Copiar Link
-              </button>
-              <span id="copy-toast" class="copy-toast" style="display:none;">Link copiado com sucesso!</span>
-            </div>
-
-            <!-- INFORMAÇÕES DE ATENDIMENTO E LOJA FÍSICA -->
-            <div class="store-guarantees-grid">
-              <div class="guarantee-item">
-                <i class="fas fa-store"></i>
-                <div>
-                  <strong>Visite Nossa Loja Física</strong>
-                  <span>Av. 15 de Novembro, 1540 – Nova Petrópolis</span>
-                </div>
-              </div>
-              <div class="guarantee-item">
-                <i class="fas fa-comments"></i>
-                <div>
-                  <strong>Atendimento Direto</strong>
-                  <span>Tire dúvidas e consulte disponibilidade pelo WhatsApp</span>
-                </div>
-              </div>
-            </div>
-
           </div>
 
         </div>
