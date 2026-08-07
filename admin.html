@@ -49,8 +49,28 @@
       </div>
 
       <!-- DASHBOARD STATS GRID -->
-      <div class="admin-stats-grid" id="admin-stats-grid" style="margin-bottom: 30px;">
+      <div class="admin-stats-grid" id="admin-stats-grid" style="margin-bottom: 24px;">
         <!-- Renderizado dinamicamente via admin-panel.js -->
+      </div>
+
+      <!-- BARRA DE PESQUISA INSTANTÂNEA E FILTROS -->
+      <div class="admin-filter-bar">
+        <div class="admin-search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" id="admin-search-input" class="admin-search-input" placeholder="Pesquisa instantânea por nome, marca, categoria ou SKU..." />
+        </div>
+        <select id="admin-filter-category" class="admin-filter-select">
+          <option value="all">Todas as Categorias</option>
+        </select>
+        <select id="admin-filter-brand" class="admin-filter-select">
+          <option value="all">Todas as Marcas</option>
+        </select>
+        <select id="admin-filter-stock" class="admin-filter-select">
+          <option value="all">Toda Disponibilidade</option>
+          <option value="Disponível">Disponível (Pronta Entrega)</option>
+          <option value="Sob Encomenda">Sob Encomenda</option>
+          <option value="Fora de Estoque">Fora de Estoque</option>
+        </select>
       </div>
 
       <!-- TABELA DE PRODUTOS -->
@@ -65,14 +85,14 @@
                 <th>Categoria</th>
                 <th>Marca</th>
                 <th>Disponibilidade</th>
-                <th>Status</th>
-                <th style="width: 130px;">Ações</th>
+                <th style="width: 80px;">Status</th>
+                <th style="width: 320px; text-align: center;">Ações Rápidas</th>
               </tr>
             </thead>
             <tbody id="admin-products-table-body">
               <tr>
                 <td colspan="8" style="text-align:center; padding: 40px; color: var(--gray);">
-                  <i class="fas fa-spinner fa-spin"></i> Carregando produtos do banco de dados...
+                  <i class="fas fa-spinner fa-spin"></i> Carregando produtos...
                 </td>
               </tr>
             </tbody>
@@ -83,127 +103,175 @@
     </div>
   </main>
 
-  <!-- MODAL DE CADASTRO / EDIÇÃO RÁPIDA (30 SEGUNDOS) -->
+  <!-- MODAL DE CADASTRO / EDIÇÃO ORGANIZADO EM ABAS (SHOPIFY / TINY ERP STYLE) -->
   <div id="admin-modal" class="admin-modal-backdrop" style="display: none;">
-    <div class="admin-modal-card">
+    <div class="admin-modal-card" style="max-width: 780px;">
       <div class="admin-modal-header">
-        <h3 id="modal-title">Adicionar Novo Produto</h3>
+        <h3 id="modal-title"><i class="fas fa-box"></i> Editar Produto</h3>
         <button type="button" id="btn-close-modal" class="close-modal-btn">&times;</button>
       </div>
-      <form id="admin-product-form" class="admin-form-body">
-        
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label>Nome do Produto *</label>
-            <input type="text" id="input-nome" required placeholder="Ex: Teclado Mecânico Gamer Redragon RGB" />
-          </div>
-          <div class="form-field">
-            <label>Categoria Principal *</label>
-            <select id="input-categoria" required>
-              <option value="">Selecione uma Categoria...</option>
-              <option value="computadores">Computadores</option>
-              <option value="pc_gamer">PC Gamer</option>
-              <option value="notebooks">Notebooks</option>
-              <option value="monitores">Monitores</option>
-              <option value="componentes">Componentes</option>
-              <option value="perifericos">Periféricos</option>
-              <option value="redes">Redes</option>
-              <option value="impressao">Impressão</option>
-              <option value="armazenamento">Armazenamento</option>
-              <option value="energia">Energia</option>
-              <option value="automacao">Automação Comercial</option>
-              <option value="assistencia">Assistência Técnica</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label>Marca *</label>
-            <input type="text" id="input-marca" required placeholder="Ex: Redragon, Kingston, NZXT, TP-Link" />
-          </div>
-        </div>
 
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label>Disponibilidade de Estoque *</label>
-            <select id="input-estoque" required>
-              <option value="Disponível">Disponível (Pronta Entrega)</option>
-              <option value="Sob Encomenda">Sob Encomenda</option>
-              <option value="Fora de Estoque">Fora de Estoque</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label>Garantia (Opcional)</label>
-            <input type="text" id="input-garantia" placeholder="Ex: 12 Meses com Fabricante" />
-          </div>
-          <div class="form-field">
-            <label>Subcategoria (Opcional)</label>
-            <input type="text" id="input-subcategoria" placeholder="Ex: Teclados, SSD, Processadores" />
-          </div>
-        </div>
+      <!-- NAVEGAÇÃO DAS ABAS -->
+      <div class="admin-tabs-nav">
+        <button type="button" class="admin-tab-btn active" data-tab="tab-info">
+          <i class="fas fa-info-circle"></i> Informações
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-photos">
+          <i class="fas fa-camera"></i> Fotos
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-desc">
+          <i class="fas fa-align-left"></i> Descrição
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-share">
+          <i class="fas fa-share-alt"></i> Compartilhar
+        </button>
+      </div>
 
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label>Caminho/URL da Foto Principal *</label>
-            <input type="text" id="input-imagem" required placeholder="imagem/teclado_redragon.jpg" />
-          </div>
-          <div class="form-field">
-            <label><i class="fas fa-cloud-upload-alt" style="color: var(--blue);"></i> Upload no Firebase Storage</label>
-            <input type="file" id="input-file-imagem" accept="image/*" style="font-size: 12px; color: var(--gray-light);" />
-            <span id="upload-status-lbl" style="font-size: 11px; color: var(--gray); margin-top: 4px; display: block;"></span>
-          </div>
-          <div class="form-field">
-            <label>Código SKU / Referência (Opcional)</label>
-            <input type="text" id="input-codigo" placeholder="Ex: JC-RED-001" />
-          </div>
-        </div>
+      <form id="admin-product-form" class="admin-form-body" style="padding-top: 0;">
 
-        <!-- CAMPO DE PREÇO (AGORA OPCIONAL) -->
-        <div class="form-group-grid">
-          <div class="form-field">
-            <label>Preço de Tabela R$ (Opcional)</label>
-            <input type="number" step="0.01" id="input-preco" placeholder="Opcional - Ex: 289.90" />
+        <!-- ABA 1: INFORMAÇÕES GERAIS -->
+        <div id="tab-info" class="admin-tab-pane active">
+          <div class="form-group-grid">
+            <div class="form-field">
+              <label>Nome do Produto *</label>
+              <input type="text" id="input-nome" required placeholder="Ex: Teclado Mecânico Gamer Redragon RGB" />
+            </div>
+            <div class="form-field">
+              <label>Categoria Principal *</label>
+              <select id="input-categoria" required>
+                <option value="">Selecione uma Categoria...</option>
+                <option value="computadores">Computadores</option>
+                <option value="pc_gamer">PC Gamer</option>
+                <option value="notebooks">Notebooks</option>
+                <option value="monitores">Monitores</option>
+                <option value="componentes">Componentes</option>
+                <option value="perifericos">Periféricos</option>
+                <option value="redes">Redes</option>
+                <option value="impressao">Impressão</option>
+                <option value="armazenamento">Armazenamento</option>
+                <option value="energia">Energia</option>
+                <option value="automacao">Automação Comercial</option>
+                <option value="assistencia">Assistência Técnica</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Marca *</label>
+              <input type="text" id="input-marca" required placeholder="Ex: Redragon, Kingston, NZXT" />
+            </div>
           </div>
-          <div class="form-field">
-            <label>Preço Promocional R$ (Opcional)</label>
-            <input type="number" step="0.01" id="input-preco-promocional" placeholder="Opcional - Ex: 269.90" />
+
+          <div class="form-group-grid">
+            <div class="form-field">
+              <label>Disponibilidade de Estoque *</label>
+              <select id="input-estoque" required>
+                <option value="Disponível">Disponível (Pronta Entrega)</option>
+                <option value="Sob Encomenda">Sob Encomenda</option>
+                <option value="Fora de Estoque">Fora de Estoque</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Código SKU / Referência (Opcional)</label>
+              <input type="text" id="input-codigo" placeholder="Ex: 71995 ou JC-RED-001" />
+            </div>
+            <div class="form-field">
+              <label>Garantia (Opcional)</label>
+              <input type="text" id="input-garantia" placeholder="Ex: 12 Meses com Fabricante" />
+            </div>
           </div>
-          <div class="form-field">
-            <label>Ordem na Vitrine</label>
-            <input type="number" id="input-ordem" value="1" min="1" />
+
+          <div class="form-group-grid">
+            <div class="form-field">
+              <label>Subcategoria (Opcional)</label>
+              <input type="text" id="input-subcategoria" placeholder="Ex: Teclados, SSD, Processadores" />
+            </div>
+            <div class="form-field">
+              <label>Preço de Tabela R$ (Opcional)</label>
+              <input type="number" step="0.01" id="input-preco" placeholder="Opcional - Ex: 289.90" />
+            </div>
+            <div class="form-field">
+              <label>Ordem na Vitrine</label>
+              <input type="number" id="input-ordem" value="1" min="1" />
+            </div>
           </div>
-        </div>
 
-        <div class="form-field">
-          <label>Galeria de Imagens Adicionais (uma URL por linha, até 8 - Opcional)</label>
-          <textarea id="input-galeria" rows="2" placeholder="imagem/teclado_redragon_2.jpg&#10;imagem/teclado_redragon_3.jpg"></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Descrição do Produto *</label>
-          <textarea id="input-descricao" required rows="3" placeholder="Resumo claro e profissional sobre o produto para o cliente ler na vitrine digital..."></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Principais Características * (Máximo 6 itens, um por linha)</label>
-          <textarea id="input-especificacoes" required rows="4" placeholder="Switches Mecânicos Outemu Blue&#10;Iluminação RGB Chroma&#10;Padrão ABNT2 com Ç&#10;Teclas 100% Anti-Ghosting&#10;Cabo Trançado Reforçado de 1.8m"></textarea>
-        </div>
-
-        <div class="form-group-grid" style="margin-top: 10px;">
-          <div class="form-field">
-            <label>Sinalizadores de Exibição</label>
-            <div style="display: flex; gap: 14px; margin-top: 6px; flex-wrap: wrap;">
-              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: var(--white);">
-                <input type="checkbox" id="input-destaque" /> Destaque na Vitrine
-              </label>
-              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: #00C853; font-weight:700;">
-                <input type="checkbox" id="input-ativo" checked /> Ativo no Site
-              </label>
+          <div class="form-group-grid" style="margin-top: 10px;">
+            <div class="form-field">
+              <label>Sinalizadores de Exibição</label>
+              <div style="display: flex; gap: 18px; margin-top: 8px; flex-wrap: wrap;">
+                <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: var(--white);">
+                  <input type="checkbox" id="input-destaque" /> Destaque na Vitrine
+                </label>
+                <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: #00C853; font-weight:700;">
+                  <input type="checkbox" id="input-ativo" checked /> Ativo no Site
+                </label>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="admin-modal-footer">
+        <!-- ABA 2: GERENCIADOR RÁPIDO DE FOTOS -->
+        <div id="tab-photos" class="admin-tab-pane">
+          <div class="form-field">
+            <label>Foto Principal (Caminho/URL) *</label>
+            <input type="text" id="input-imagem" required placeholder="imagem/teclado_redragon.jpg" />
+          </div>
+
+          <div class="form-field" style="margin-top: 12px;">
+            <label><i class="fas fa-cloud-upload-alt" style="color: var(--blue-light);"></i> Upload de Imagem (Firebase Storage)</label>
+            <input type="file" id="input-file-imagem" accept="image/*" style="font-size: 13px; color: var(--gray-light);" />
+            <span id="upload-status-lbl" style="font-size: 12px; color: var(--gray); margin-top: 4px; display: block;"></span>
+          </div>
+
+          <div class="form-field" style="margin-top: 16px;">
+            <label>Galeria de Imagens Adicionais (uma URL por linha)</label>
+            <textarea id="input-galeria" rows="3" placeholder="imagem/teclado_redragon_2.jpg&#10;imagem/teclado_redragon_3.jpg"></textarea>
+          </div>
+
+          <!-- Pré-visualização da Imagem -->
+          <div style="margin-top: 14px; background: var(--dark); padding: 14px; border-radius: 8px; border: 1px solid var(--border);">
+            <strong style="font-size: 13px; color: var(--white); display: block; margin-bottom: 8px;">Pré-visualização da Foto Principal:</strong>
+            <img id="modal-img-preview" src="imagem/teclado_redragon.jpg" alt="Preview" style="max-height: 120px; border-radius: 6px; object-fit: contain; background: #000; padding: 4px;" />
+          </div>
+        </div>
+
+        <!-- ABA 3: DESCRIÇÃO E CARACTERÍSTICAS -->
+        <div id="tab-desc" class="admin-tab-pane">
+          <div class="form-field">
+            <label>Descrição do Produto *</label>
+            <textarea id="input-descricao" required rows="4" placeholder="Descrição ou resumo claro sobre o produto para o cliente ler no catálogo digital..."></textarea>
+          </div>
+
+          <div class="form-field" style="margin-top: 14px;">
+            <label>Principais Características * (Até 6 itens, um por linha)</label>
+            <textarea id="input-especificacoes" required rows="5" placeholder="Switches Mecânicos Outemu Blue&#10;Iluminação RGB Chroma com múltiplos modos&#10;Padrão ABNT2 com Ç&#10;Teclas 100% Anti-Ghosting&#10;Cabo Trançado de 1.8m"></textarea>
+          </div>
+        </div>
+
+        <!-- ABA 4: COMPARTILHAR E AÇÕES RÁPIDAS -->
+        <div id="tab-share" class="admin-tab-pane">
+          <div style="background: var(--dark-3); border: 1px solid var(--border-glow); padding: 20px; border-radius: var(--radius); text-align: center;">
+            <i class="fab fa-whatsapp" style="font-size: 42px; color: #00C853; margin-bottom: 10px;"></i>
+            <h4 style="font-size: 18px; color: var(--white); margin-bottom: 6px;">Envio Rápido para WhatsApp</h4>
+            <p style="color: var(--gray); font-size: 13px; margin-bottom: 16px;">Copie o link direto ou a mensagem pré-formatada para enviar ao cliente em segundos.</p>
+
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+              <button type="button" id="modal-btn-copy-link" class="btn btn-outline" style="font-size: 13px;">
+                <i class="fas fa-link"></i> Copiar Link do Produto
+              </button>
+              <button type="button" id="modal-btn-open-prod" class="btn btn-outline" style="font-size: 13px;">
+                <i class="fas fa-external-link-alt"></i> Abrir Produto no Navegador
+              </button>
+              <button type="button" id="modal-btn-copy-wa" class="btn btn-whatsapp" style="font-size: 13px;">
+                <i class="fab fa-whatsapp"></i> Copiar Mensagem para WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RODAPÉ DO MODAL -->
+        <div class="admin-modal-footer" style="margin-top: 20px;">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('admin-modal').style.display='none'">Cancelar</button>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Produto na Vitrine</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Produto</button>
         </div>
       </form>
     </div>
