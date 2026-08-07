@@ -4367,6 +4367,54 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   object-fit: cover;
 }
 
+/* ============================================================
+   BREADCRUMB STYLES
+   ============================================================ */
+.breadcrumb-nav {
+  padding: 110px 0 16px 0;
+  background: var(--dark-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.breadcrumb-list {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.breadcrumb-list li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  color: var(--gray) !important;
+}
+
+.breadcrumb-list li i {
+  font-size: 10px !important;
+  color: var(--gray) !important;
+}
+
+.breadcrumb-list li a {
+  color: var(--gray-light) !important;
+  text-decoration: none !important;
+  transition: color 0.2s !important;
+}
+
+.breadcrumb-list li a:hover {
+  color: var(--blue-light) !important;
+}
+
+.breadcrumb-list li.active {
+  color: var(--white) !important;
+  font-weight: 600 !important;
+}
+
+
 
 
 
