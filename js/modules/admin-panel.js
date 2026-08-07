@@ -116,50 +116,40 @@ export class AdminPanelEngine {
 
     if (product) {
       this.editingId = product.id;
-      document.getElementById('modal-title').textContent = 'Editar Produto V3.1';
-      document.getElementById('input-nome').value = product.nome || '';
+      document.getElementById('modal-title').textContent = 'Editar Produto da Vitrine';
+      document.getElementById('input-nome').value = product.nome || product.titulo || '';
       document.getElementById('input-categoria').value = product.categoria || 'perifericos';
       
       const subEl = document.getElementById('input-subcategoria');
       if (subEl) subEl.value = product.subcategoria || '';
 
       document.getElementById('input-marca').value = product.marca || '';
-      document.getElementById('input-codigo').value = product.codigo || product.sku || '';
       
-      const barEl = document.getElementById('input-barras');
-      if (barEl) barEl.value = product.codigoBarras || '';
+      const codEl = document.getElementById('input-codigo');
+      if (codEl) codEl.value = product.codigo || product.sku || '';
 
-      document.getElementById('input-preco').value = product.preco || '';
-      document.getElementById('input-preco-promocional').value = product.precoPromocional || '';
-      document.getElementById('input-parcelamento').value = product.parcelamento || '';
+      const precEl = document.getElementById('input-preco');
+      if (precEl) precEl.value = (product.preco !== undefined && product.preco !== null) ? product.preco : '';
+
+      const precPromEl = document.getElementById('input-preco-promocional');
+      if (precPromEl) precPromEl.value = (product.precoPromocional !== undefined && product.precoPromocional !== null) ? product.precoPromocional : '';
 
       const estEl = document.getElementById('input-estoque');
       if (estEl) estEl.value = product.estoque || 'Disponível';
 
       const garEl = document.getElementById('input-garantia');
-      if (garEl) garEl.value = product.garantia || '12 Meses com Fabricante';
-
-      const fabEl = document.getElementById('input-fabricante');
-      if (fabEl) fabEl.value = product.fabricante || '';
-
-      const tagEl = document.getElementById('input-tags');
-      if (tagEl) tagEl.value = (product.tags || []).join(', ');
+      if (garEl) garEl.value = product.garantia || '';
 
       document.getElementById('input-ordem').value = product.ordem || 1;
       document.getElementById('input-imagem').value = product.imagem || '';
       document.getElementById('input-galeria').value = (product.galeria || []).join('\n');
       document.getElementById('input-destaque').checked = !!product.destaque;
-      document.getElementById('input-promocao').checked = !!product.promocao;
       document.getElementById('input-ativo').checked = product.ativo !== false;
-      document.getElementById('input-especificacoes').value = (product.especificacoes || []).join('\n');
-      
-      const resEl = document.getElementById('input-resumo');
-      if (resEl) resEl.value = product.resumo || '';
-
-      document.getElementById('input-descricao').value = product.descricao || '';
+      document.getElementById('input-especificacoes').value = (product.especificacoes || product.specs || []).join('\n');
+      document.getElementById('input-descricao').value = product.descricao || product.resumo || '';
     } else {
       this.editingId = null;
-      document.getElementById('modal-title').textContent = 'Adicionar Novo Produto V3.1 (Cadastro 30s)';
+      document.getElementById('modal-title').textContent = 'Adicionar Novo Produto na Vitrine';
       this.form.reset();
       document.getElementById('input-ativo').checked = true;
       document.getElementById('input-ordem').value = ProductStore.getProducts().length + 1;
@@ -179,43 +169,39 @@ export class AdminPanelEngine {
 
     const specsRaw = document.getElementById('input-especificacoes').value;
     const galeriaRaw = document.getElementById('input-galeria').value;
-    const tagsRaw = document.getElementById('input-tags') ? document.getElementById('input-tags').value : '';
 
     const specsArray = specsRaw.split('\n').map(s => s.trim()).filter(Boolean);
     const galeriaArray = galeriaRaw.split('\n').map(g => g.trim()).filter(Boolean);
-    const tagsArray = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
     const mainImg = document.getElementById('input-imagem').value.trim() || 'imagem/teclado_redragon.jpg';
 
     if (galeriaArray.length === 0) {
       galeriaArray.push(mainImg);
     }
 
-    const priceNum = parseFloat(document.getElementById('input-preco').value);
-    const promoNum = parseFloat(document.getElementById('input-preco-promocional').value) || priceNum;
+    const priceInputVal = document.getElementById('input-preco').value.trim();
+    const promoInputVal = document.getElementById('input-preco-promocional') ? document.getElementById('input-preco-promocional').value.trim() : '';
+
+    const priceNum = priceInputVal !== '' ? parseFloat(priceInputVal) : null;
+    const promoNum = promoInputVal !== '' ? parseFloat(promoInputVal) : priceNum;
 
     const productData = {
       nome: document.getElementById('input-nome').value.trim(),
       categoria: document.getElementById('input-categoria').value,
       subcategoria: document.getElementById('input-subcategoria') ? document.getElementById('input-subcategoria').value.trim() : '',
       marca: document.getElementById('input-marca').value.trim(),
-      codigo: document.getElementById('input-codigo').value.trim() || 'JC-STORE',
-      sku: document.getElementById('input-codigo').value.trim() || 'JC-STORE',
-      codigoBarras: document.getElementById('input-barras') ? document.getElementById('input-barras').value.trim() : '',
+      codigo: document.getElementById('input-codigo') && document.getElementById('input-codigo').value.trim() ? document.getElementById('input-codigo').value.trim() : 'JC-STORE',
+      sku: document.getElementById('input-codigo') && document.getElementById('input-codigo').value.trim() ? document.getElementById('input-codigo').value.trim() : 'JC-STORE',
       preco: priceNum,
       precoPromocional: promoNum,
-      parcelamento: document.getElementById('input-parcelamento').value.trim() || `10x de R$ ${(priceNum/10).toFixed(2).replace('.',',')} sem juros`,
       estoque: document.getElementById('input-estoque') ? document.getElementById('input-estoque').value : 'Disponível',
-      garantia: document.getElementById('input-garantia') ? document.getElementById('input-garantia').value.trim() : '12 Meses com Fabricante',
-      fabricante: document.getElementById('input-fabricante') ? document.getElementById('input-fabricante').value.trim() : '',
-      tags: tagsArray,
+      garantia: document.getElementById('input-garantia') ? document.getElementById('input-garantia').value.trim() : '',
       ordem: parseInt(document.getElementById('input-ordem').value) || 1,
       imagem: mainImg,
       galeria: galeriaArray,
       destaque: document.getElementById('input-destaque').checked,
-      promocao: document.getElementById('input-promocao').checked,
       ativo: document.getElementById('input-ativo').checked,
-      especificacoes: specsArray,
-      resumo: document.getElementById('input-resumo') ? document.getElementById('input-resumo').value.trim() : '',
+      especificacoes: specsArray.slice(0, 6), // Máximo 6 principais características
+      resumo: document.getElementById('input-descricao').value.trim().substring(0, 160),
       descricao: document.getElementById('input-descricao').value.trim()
     };
 
@@ -246,8 +232,10 @@ export class AdminPanelEngine {
 
     let html = '';
     products.forEach(p => {
-      const formattedPrice = parseFloat(p.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const formattedPromo = p.precoPromocional ? parseFloat(p.precoPromocional).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : formattedPrice;
+      const stockStatus = p.estoque || 'Disponível';
+      const isPreOrder = stockStatus === 'Sob Encomenda' || stockStatus === 'Fora de Estoque';
+      const stockBadgeHtml = `<span class="stock-status-badge ${isPreOrder ? 'pre-order' : 'in-stock'}" style="font-size: 11px; padding: 3px 8px;"><i class="fas ${isPreOrder ? 'fa-clock' : 'fa-check'}"></i> ${stockStatus}</span>`;
+
       const isAtivo = p.ativo !== false;
 
       html += `
@@ -259,14 +247,11 @@ export class AdminPanelEngine {
           <td>
             <strong>${p.nome || p.titulo}</strong>
             <br />
-            <small style="color: var(--gray);">Cód: ${p.codigo || p.sku || '-'}</small>
+            <small style="color: var(--gray);">Ref: ${p.codigo || p.sku || '-'}</small>
           </td>
           <td><span class="admin-badge">${p.categoria}</span></td>
           <td>${p.marca || '-'}</td>
-          <td>
-            <span style="font-weight: 700; color: #00C853;">${formattedPromo}</span>
-            ${p.precoPromocional && p.precoPromocional < p.preco ? `<br/><small style="text-decoration:line-through; color:var(--gray);">${formattedPrice}</small>` : ''}
-          </td>
+          <td>${stockBadgeHtml}</td>
           <td>
             <button type="button" class="status-toggle-btn ${isAtivo ? 'active-status' : 'inactive-status'}" data-id="${p.id}">
               <i class="fas ${isAtivo ? 'fa-check-circle' : 'fa-eye-slash'}"></i> ${isAtivo ? 'Ativo' : 'Inativo'}
@@ -274,8 +259,11 @@ export class AdminPanelEngine {
           </td>
           <td>
             <div class="admin-actions">
-              <button type="button" class="btn-action copy-marketing-btn" data-id="${p.id}" title="Gerar Copy Marketing (Instagram/Whats)">
-                <i class="fas fa-bullhorn"></i>
+              <button type="button" class="btn-action share-btn-admin" data-id="${p.id}" title="📤 Compartilhar Link do Produto (Copiar para WhatsApp)" style="background: rgba(0, 200, 83, 0.15); color: #00C853; border: 1px solid rgba(0, 200, 83, 0.3); font-weight: bold;">
+                <i class="fas fa-share-alt"></i> 📤 Compartilhar
+              </button>
+              <button type="button" class="btn-action copy-marketing-btn" data-id="${p.id}" title="Gerar Mensagem Completa com Link para o WhatsApp">
+                <i class="fab fa-whatsapp"></i>
               </button>
               <button type="button" class="btn-action edit-btn" data-id="${p.id}" title="Editar">
                 <i class="fas fa-edit"></i>
@@ -298,6 +286,20 @@ export class AdminPanelEngine {
     const deleteBtns = this.tableBody.querySelectorAll('.delete-btn');
     const statusBtns = this.tableBody.querySelectorAll('.status-toggle-btn');
     const mktBtns = this.tableBody.querySelectorAll('.copy-marketing-btn');
+    const shareBtns = this.tableBody.querySelectorAll('.share-btn-admin');
+
+    shareBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const product = ProductStore.getProductById(id);
+        if (product) {
+          const productUrl = `${window.location.origin}/produto.html?id=${encodeURIComponent(product.id)}`;
+          navigator.clipboard.writeText(productUrl).then(() => {
+            alert(`📤 Link do produto copiado com sucesso!\n\n${productUrl}\n\nAgora cole no WhatsApp do cliente.`);
+          });
+        }
+      });
+    });
 
     mktBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -342,21 +344,19 @@ export class AdminPanelEngine {
 
   generateMarketingCopy(product) {
     const name = product.nome || product.titulo;
-    const pricePix = parseFloat(product.precoPromocional || product.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const code = product.codigo || product.sku || 'JC-STORE';
+    const brand = product.marca || 'JC Informática';
+    const stock = product.estoque || 'Disponível';
+    const productUrl = `${window.location.origin}/produto.html?id=${encodeURIComponent(product.id)}`;
 
-    const copyText = `🚀 OPORTUNIDADE EM NOVA PETRÓPOLIS - JC INFORMÁTICA! 💻🔥\n\n` +
-      `📦 ${name}\n` +
-      `🏷️ Código: ${code}\n` +
-      `💰 Apenas ${pricePix} à vista no Pix / Dinheiro!\n` +
-      `💳 Ou no cartão em até 10x sem juros!\n\n` +
-      `✨ Pronta entrega na nossa loja física ou envio rápido na região!\n\n` +
-      `📲 Chame agora no WhatsApp: (54) 3281-4464\n` +
-      `📍 Av. 15 de Novembro, 1540 - Sala 110, Centro, Nova Petrópolis - RS\n\n` +
-      `#JCInformatica #NovaPetropolis #PCGamer #Hardware #SetupGamer #${(product.marca || 'Informatica').replace(/\s+/g, '')}`;
+    const copyText = `Olá! Confira os detalhes deste produto em nossa Vitrine Digital - JC Informática:\n\n` +
+      `📦 *${name}*\n` +
+      `🏷️ Marca: ${brand}\n` +
+      `✅ Disponibilidade: ${stock}\n\n` +
+      `🔗 Acesse a vitrine para fotos e especificações completas:\n${productUrl}\n\n` +
+      `💬 Qualquer dúvida, estou à disposição aqui no WhatsApp!`;
 
     navigator.clipboard.writeText(copyText).then(() => {
-      alert(`Legenda para Instagram/WhatsApp gerada e copiada para a área de transferência!\n\n${copyText}`);
+      alert(`Link e mensagem do produto copiados com sucesso!\n\nAgora você pode colar no WhatsApp do cliente:\n\n${copyText}`);
     });
   }
 }

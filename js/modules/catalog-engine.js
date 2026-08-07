@@ -221,18 +221,17 @@ export class CatalogEngine {
     }
 
     // 8. Filtro de Preço Máximo
-    if (this.priceSlider) {
+    if (this.priceSlider && parseFloat(this.priceSlider.value) < parseFloat(this.priceSlider.max)) {
       const maxPrice = parseFloat(this.priceSlider.value);
-      list = list.filter(p => parseFloat(p.precoPromocional || p.preco) <= maxPrice);
+      list = list.filter(p => {
+        const val = p.precoPromocional !== null && p.precoPromocional !== undefined ? parseFloat(p.precoPromocional) : parseFloat(p.preco);
+        return !isNaN(val) && val <= maxPrice;
+      });
     }
 
-    // 9. Ordenação
+    // 8. Ordenação
     const sortVal = this.sortSelect ? this.sortSelect.value : 'default';
-    if (sortVal === 'price-low') {
-      list.sort((a, b) => parseFloat(a.precoPromocional || a.preco) - parseFloat(b.precoPromocional || b.preco));
-    } else if (sortVal === 'price-high') {
-      list.sort((a, b) => parseFloat(b.precoPromocional || b.preco) - parseFloat(a.precoPromocional || a.preco));
-    } else if (sortVal === 'name-az') {
+    if (sortVal === 'name-az') {
       list.sort((a, b) => (a.nome || a.titulo).localeCompare(b.nome || b.titulo));
     } else if (sortVal === 'recent') {
       list.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
@@ -260,53 +259,50 @@ export class CatalogEngine {
     let html = '';
     filtered.forEach(p => {
       const prodName = p.nome || p.titulo;
-      const prodCode = p.codigo || p.sku || 'JC-STORE';
-      const priceNum = parseFloat(p.preco);
-      const promoNum = p.precoPromocional ? parseFloat(p.precoPromocional) : priceNum;
-      
-      const formattedPrice = promoNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const formattedOriginal = (priceNum > promoNum) ? priceNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : null;
-      
+      const prodBrand = p.marca || 'JC Informática';
+      const prodStock = p.estoque || 'Disponível';
+      const isPreOrder = prodStock === 'Sob Encomenda' || prodStock === 'Fora de Estoque';
       const productUrl = `produto.html?id=${encodeURIComponent(p.id)}`;
-      const waTextRaw = `Olá!\n\nTenho interesse no produto:\n\n${prodName}\n\nCódigo: ${prodCode}\n\nPreço: ${formattedPrice}\n\nVi este produto no site da JC Informática e gostaria de mais informações.`;
+
+      const pageUrl = window.location.origin + window.location.pathname.replace(/produtos\.html|produtos/g, '') + productUrl;
+      const waTextRaw = `Olá! Tenho interesse no produto:\n\n*${prodName}*\nMarca: ${prodBrand}\nDisponibilidade: ${prodStock}\n\nConfira no catálogo digital: ${pageUrl}`;
       const waUrl = `https://wa.me/555432814464?text=${encodeURIComponent(waTextRaw)}`;
 
-      // Tags Badges HTML
-      const tagBadgesHTML = (p.tags || []).slice(0, 2).map(t => `<span class="prod-tag-pill">${t}</span>`).join('');
+      // Características (até 2 no card)
+      const rawSpecs = p.especificacoes || p.specs || [];
+      const specsPreview = rawSpecs.slice(0, 2);
 
       html += `
         <article class="product-card" data-id="${p.id}" data-category="${p.categoria}">
           <a href="${productUrl}" class="product-image-wrapper" aria-label="${prodName}">
-            <span class="stock-badge ${p.promocao ? 'in-stock' : 'pre-order'}">
-              <i class="fas ${p.promocao ? 'fa-fire' : 'fa-check'}"></i> ${p.promocao ? 'Oferta' : (p.estoque || 'Disponível')}
+            <span class="stock-badge ${isPreOrder ? 'pre-order' : 'in-stock'}">
+              <i class="fas ${isPreOrder ? 'fa-clock' : 'fa-check'}"></i> ${prodStock}
             </span>
             <img src="${p.imagem}" alt="${prodName}" loading="lazy" />
           </a>
 
           <div class="product-info">
             <div class="product-tags-row">
-              ${tagBadgesHTML}
+              <span class="brand-badge">${prodBrand}</span>
+              ${p.categoria ? `<span class="subcat-tag-badge">${p.categoria}</span>` : ''}
             </div>
 
             <h3 class="product-title">
               <a href="${productUrl}">${prodName}</a>
             </h3>
 
-            <p class="product-sku-code"><i class="fas fa-barcode"></i> SKU: ${prodCode}</p>
+            ${specsPreview.length > 0 ? `
+              <ul class="product-specs">
+                ${specsPreview.map(s => `<li><i class="fas fa-check-circle" style="color:var(--blue-light);"></i> ${s}</li>`).join('')}
+              </ul>
+            ` : ''}
 
-            <ul class="product-specs">
-              ${(p.especificacoes || []).slice(0, 2).map(s => `<li><i class="fas fa-check"></i> ${s}</li>`).join('')}
-            </ul>
-
-            <div class="product-footer">
-              <div class="price-box">
-                ${formattedOriginal ? `<span class="price-original">${formattedOriginal}</span>` : ''}
-                <span class="price-value">${formattedPrice}</span>
-                <span class="price-pix-badge"><i class="fas fa-barcode"></i> no Pix</span>
-              </div>
-
-              <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp product-buy-btn" title="Comprar pelo WhatsApp">
-                <i class="fab fa-whatsapp"></i> Whats
+            <div class="product-footer showcase-card-footer" style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="${productUrl}" class="btn btn-outline" style="flex: 1; text-align: center; font-size: 13px; padding: 8px 12px;">
+                Ver Produto
+              </a>
+              <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="flex: 1.3; text-align: center; font-size: 12px; padding: 8px 10px; white-space: nowrap;" title="Tenho interesse neste produto">
+                <i class="fab fa-whatsapp"></i> Tenho interesse
               </a>
             </div>
           </div>

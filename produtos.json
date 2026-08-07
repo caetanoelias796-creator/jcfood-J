@@ -1,98 +1,193 @@
 [
   {
-    "id": 1,
-    "categoria": "perifericos",
+    "id": "prod-1",
+    "nome": "Teclado Mecânico Gamer Redragon RGB Switch Blue",
     "titulo": "Teclado Mecânico Gamer Redragon RGB Switch Blue",
+    "marca": "Redragon",
+    "codigo": "71995",
+    "sku": "71995",
+    "categoria": "perifericos",
     "imagem": "imagem/teclado_redragon.jpg",
-    "destaque": "Pronta Entrega",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Padrão ABNT2 com Ç",
-      "Switches Mecânicos de Alta Precisão",
+      "Switches Mecânicos de Alta Precisão (Outemu Blue)",
       "Iluminação RGB Chroma com múltiplos modos",
-      "Sistema 100% Anti-Ghosting"
+      "Teclas 100% Anti-Ghosting"
     ],
-    "preco": "R$ 289,90",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20comprar/reservar%20o%20Teclado%20Mecânico%20Gamer%20Redragon%20RGB%20(R$%20289,90)."
+    "resumo": "Padrão ABNT2 com iluminação RGB Chroma personalizável e switches mecânicos de alta durabilidade."
   },
   {
-    "id": 2,
-    "categoria": "gabinetes",
+    "id": "prod-2",
+    "nome": "Gabinete Gamer Aquário Vidro Temperado Panorâmico ARGB",
     "titulo": "Gabinete Gamer Aquário Vidro Temperado Panorâmico ARGB",
+    "marca": "NZXT",
+    "codigo": "JC-NZX-002",
+    "sku": "JC-NZX-002",
+    "categoria": "componentes",
     "imagem": "imagem/Gabinete NZXT H9.png",
-    "destaque": "Destaque",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Lateral e Frente em Vidro Temperado",
       "Suporte a Water Cooler até 360mm",
-      "Excelente fluxo de ar e Cable Management",
-      "Compatível com placas ATX / Micro-ATX"
+      "Excelente fluxo de ar e Cable Management"
     ],
-    "preco": "R$ 499,00",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Tenho%20interesse%20no%20Gabinete%20Gamer%20Aquário%20Panorâmico%20Vidro%20Temperado%20(R$%20499,00)."
+    "resumo": "Gabinete no estilo aquário com visão panorâmica de vidro temperado e excelente fluxo de ar."
   },
   {
-    "id": 3,
-    "categoria": "audio",
+    "id": "prod-3",
+    "nome": "Headset Gamer Redragon 7.1 Surround Som Imersivo",
     "titulo": "Headset Gamer Redragon 7.1 Surround Som Imersivo",
+    "marca": "Redragon",
+    "codigo": "JC-RED-003",
+    "sku": "JC-RED-003",
+    "categoria": "perifericos",
     "imagem": "imagem/headset_gamer.jpg",
-    "destaque": "Pronta Entrega",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Áudio Surround 7.1 de Alta Fidelidade",
       "Microfone Removível com Redução de Ruído",
-      "Almofadas de Couro Sintético Ultra Macias",
-      "Conexão USB / P2 Multiplataforma"
+      "Almofadas de Couro Sintético Ultra Macias"
     ],
-    "preco": "R$ 329,90",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Quero%20comprar/reservar%20o%20Headset%20Gamer%20Redragon%207.1%20Surround%20(R$%20329,90)."
+    "resumo": "Áudio surround 7.1 virtual com cancelamento de ruído passivo e almofadas ultra confortáveis."
   },
   {
-    "id": 4,
-    "categoria": "hardware",
-    "titulo": "SSD NVMe M.2 1TB / 500GB Alta Velocidade",
+    "id": "prod-4",
+    "nome": "SSD NVMe M.2 1TB Ultra Velocidade Read 3500MB/s",
+    "titulo": "SSD NVMe M.2 1TB Ultra Velocidade Read 3500MB/s",
+    "marca": "Kingston",
+    "codigo": "JC-SSD-004",
+    "sku": "JC-SSD-004",
+    "categoria": "componentes",
     "imagem": "imagem/ssd_hardware.jpg",
-    "destaque": "Alta Velocidade",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Velocidade de Leitura de até 3500 MB/s",
       "Inicialização do Windows em poucos segundos",
-      "Instalação e Formatação Inclusas na Loja",
-      "Garantia Oficial e Suporte Técnico"
+      "Instalação e Formatação Inclusas na Loja"
     ],
-    "preco": "R$ 249,00",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20Upgrade%20de%20SSD%20NVMe/Memória%20RAM."
+    "resumo": "Inicialização do Windows em 5 segundos e carregamento instantâneo de jogos e programas."
   },
   {
-    "id": 5,
-    "categoria": "perifericos",
+    "id": "prod-5",
+    "nome": "Mouse Gamer Redragon RGB 12.400 DPI Ergonômico",
     "titulo": "Mouse Gamer Redragon RGB 12.400 DPI Ergonômico",
+    "marca": "Redragon",
+    "codigo": "JC-RED-005",
+    "sku": "JC-RED-005",
+    "categoria": "perifericos",
     "imagem": "imagem/redrogomoba.png",
-    "destaque": "Pronta Entrega",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Sensor Óptico de Alta Precisão (Pixart)",
       "Botões Programáveis via Software",
-      "Cabo Trançado de Alta Durabilidade",
       "Pegada Ergonômica Confortável"
     ],
-    "preco": "R$ 149,90",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20comprar/reservar%20o%20Mouse%20Gamer%20Redragon%20RGB%20(R$%20149,90)."
+    "resumo": "Sensor óptico Pixart de altíssima precisão com 7 botões programáveis via software."
   },
   {
-    "id": 6,
-    "categoria": "redes",
+    "id": "prod-6",
+    "nome": "Roteador TP-Link Dual Band AC1200 Gigabit",
     "titulo": "Roteador TP-Link Dual Band AC1200 Gigabit",
+    "marca": "TP-Link",
+    "codigo": "JC-TPL-006",
+    "sku": "JC-TPL-006",
+    "categoria": "redes",
     "imagem": "imagem/roteador_tplink.jpg",
-    "destaque": "Sinal Forte",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
     "badgeClass": "in-stock",
     "specs": [
       "Frequência Dual Band (2.4GHz + 5GHz)",
       "Antenas de Alto Ganho para Cobertura Total",
-      "Portas Gigabit para Conexão Estável",
-      "Ideal para Casas, Empresas e Jogos Online"
+      "Portas Gigabit para Conexão Estável"
     ],
-    "preco": "R$ 199,90",
-    "linkWhatsApp": "https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20comprar%20o%20Roteador%20TP-Link%20Dual%20Band%20AC1200%20(R$%20199,90)."
+    "resumo": "Wi-Fi Dual Band (2.4GHz + 5GHz) com 4 antenas externas de alto ganho e portas Gigabit."
+  },
+  {
+    "id": "prod-71995",
+    "nome": "Kit Keycaps ABNT2 RM PBT A108 Preto - Redragon",
+    "titulo": "Kit Keycaps ABNT2 RM PBT A108 Preto - Redragon",
+    "marca": "Redragon",
+    "codigo": "71995",
+    "sku": "71995",
+    "categoria": "perifericos",
+    "imagem": "imagem/teclado_redragon.jpg",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
+    "badgeClass": "in-stock",
+    "specs": [
+      "Material PBT de alta durabilidade",
+      "Padrão ABNT2 com Ç",
+      "Injeção Double-Shot (letras não apagam)"
+    ],
+    "resumo": "Kit de keycaps de reposição PBT Double-Shot padrão ABNT2 para teclados mecânicos Redragon."
+  },
+  {
+    "id": "prod-39554",
+    "nome": "Teclado Mecânico Gamer Redragon Dark Avenger K568RGB-2 Blue",
+    "titulo": "Teclado Mecânico Gamer Redragon Dark Avenger K568RGB-2 Blue",
+    "marca": "Redragon",
+    "codigo": "39554",
+    "sku": "39554",
+    "categoria": "perifericos",
+    "imagem": "imagem/teclado_redragon.jpg",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
+    "badgeClass": "in-stock",
+    "specs": [
+      "Formato TKL compacto",
+      "Switches Mecânicos Outemu Blue",
+      "Iluminação RGB com vários modos"
+    ],
+    "resumo": "Teclado mecânico compacto Tenkeyless (TKL) com iluminação RGB e Switch Blue."
+  },
+  {
+    "id": "prod-695047",
+    "nome": "Teclado Mecânico Redragon Kala RGB Branco Switch Preto",
+    "titulo": "Teclado Mecânico Redragon Kala RGB Branco Switch Preto",
+    "marca": "Redragon",
+    "codigo": "695047",
+    "sku": "695047",
+    "categoria": "perifericos",
+    "imagem": "imagem/teclado_redragon.jpg",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
+    "badgeClass": "in-stock",
+    "specs": [
+      "Acabamento branco elegante",
+      "Switches Mecânicos Outemu Black",
+      "Iluminação RGB individual por tecla"
+    ],
+    "resumo": "Teclado mecânico premium na cor branca com iluminação RGB e Switch Preto linear."
+  },
+  {
+    "id": "prod-90562",
+    "nome": "Combo Teclado Slim e Mouse Logitech MK120 USB Preto",
+    "titulo": "Combo Teclado Slim e Mouse Logitech MK120 USB Preto",
+    "marca": "Logitech",
+    "codigo": "90562",
+    "sku": "90562",
+    "categoria": "perifericos",
+    "imagem": "imagem/teclado_redragon.jpg",
+    "destaque": "Disponível",
+    "estoque": "Disponível",
+    "badgeClass": "in-stock",
+    "specs": [
+      "Teclado Slim resistente a respingos",
+      "Mouse óptico 1000 DPI",
+      "3 Anos de garantia oficial Logitech"
+    ],
+    "resumo": "Kit teclado e mouse USB oficial Logitech com durabilidade comprovada."
   }
 ]

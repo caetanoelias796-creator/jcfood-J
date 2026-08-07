@@ -72,28 +72,24 @@ export class ProductDetailEngine {
   render() {
     const p = this.product;
     const prodName = p.nome || p.titulo;
-    const prodCode = p.codigo || p.sku || 'JC-STORE';
-    const priceNum = parseFloat(p.preco);
-    const promoNum = p.precoPromocional ? parseFloat(p.precoPromocional) : (priceNum * 0.95);
-    
-    const formattedPrice = promoNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const formattedOriginal = (p.preco && p.preco > promoNum) ? priceNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : null;
-    const installmentText = p.parcelamento || `10x de ${(priceNum/10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} sem juros`;
+    const prodBrand = p.marca || 'JC Informática';
+    const prodStock = p.estoque || 'Disponível';
+    const isPreOrder = prodStock === 'Sob Encomenda' || prodStock === 'Fora de Estoque';
+    const shortDesc = p.resumo || p.descricao || 'Confira os detalhes e disponibilidade deste item na JC Informática.';
+    const warranty = p.garantia || '';
 
     const galleryImages = p.galeria && p.galeria.length > 0 ? p.galeria : [p.imagem];
-    const mainImg = galleryImages[0];
+    const mainImg = galleryImages[0] || 'imagem/teclado_redragon.jpg';
 
-    // FORMATO DE MENSAGEM DO WHATSAPP RIGOROSAMENTE CONFORME EXIGIDO
-    const waTextRaw = `Olá!\n\nTenho interesse no produto:\n\n${prodName}\n\nCódigo: ${prodCode}\n\nPreço: ${formattedPrice}\n\nVi este produto no site da JC Informática e gostaria de mais informações.`;
-    const waUrl = `https://wa.me/555432814464?text=${encodeURIComponent(waTextRaw)}`;
-
-    const specsListHTML = (p.especificacoes || p.specs || []).map(s => `
-      <tr>
-        <td><i class="fas fa-check-circle" style="color: var(--blue);"></i> ${s}</td>
-      </tr>
-    `).join('');
+    // Principais características (Máximo 6)
+    const rawSpecs = p.especificacoes || p.specs || [];
+    const mainFeatures = rawSpecs.slice(0, 6);
 
     const pageUrl = window.location.href;
+
+    // Mensagem automática para WhatsApp
+    const waTextRaw = `Olá! Tenho interesse no produto:\n\n*${prodName}*\nMarca: ${prodBrand}\nDisponibilidade: ${prodStock}\n\nConfira no catálogo digital: ${pageUrl}`;
+    const waUrl = `https://wa.me/555432814464?text=${encodeURIComponent(waTextRaw)}`;
 
     this.container.innerHTML = `
       <!-- BREADCRUMB -->
@@ -102,112 +98,107 @@ export class ProductDetailEngine {
           <ul class="breadcrumb-list">
             <li><a href="/">Início</a></li>
             <li><i class="fas fa-chevron-right"></i></li>
-            <li><a href="produtos">Produtos</a></li>
-            <li><i class="fas fa-chevron-right"></i></li>
-            <li><a href="produtos" class="active-cat">${p.categoria}</a></li>
+            <li><a href="produtos">Catálogo Digital</a></li>
+            ${p.categoria ? `
+              <li><i class="fas fa-chevron-right"></i></li>
+              <li><a href="produtos?categoria=${encodeURIComponent(p.categoria)}" class="active-cat">${p.categoria}</a></li>
+            ` : ''}
             <li><i class="fas fa-chevron-right"></i></li>
             <li class="active">${prodName}</li>
           </ul>
         </div>
       </nav>
 
-      <!-- PRODUCT MAIN CONTAINER -->
+      <!-- PRODUCT MAIN SHOWCASE CONTAINER (CATÁLOGO DIGITAL) -->
       <section class="product-detail-section">
         <div class="container product-detail-inner">
           
-          <!-- ESQUERDA: GALERIA DE FOTOS COM ZOOM -->
+          <!-- ESQUERDA: FOTOS E GALERIA DO PRODUTO -->
           <div class="product-gallery-block">
             <div class="main-image-stage" id="image-zoom-stage">
-              <span class="gallery-badge"><i class="fas fa-shield-alt"></i> Garantia Oficial JC</span>
+              <span class="gallery-badge ${isPreOrder ? 'pre-order' : 'in-stock'}">
+                <i class="fas ${isPreOrder ? 'fa-clock' : 'fa-check-circle'}"></i> ${prodStock}
+              </span>
               <img id="main-product-img" src="${mainImg}" alt="${prodName}" />
             </div>
             ${galleryImages.length > 1 ? `
               <div class="gallery-thumbnails">
                 ${galleryImages.map((imgUrl, idx) => `
-                  <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-src="${imgUrl}">
-                    <img src="${imgUrl}" alt="Foto ${idx + 1}" />
+                  <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-src="${imgUrl}" aria-label="Ver foto ${idx + 1}">
+                    <img src="${imgUrl}" alt="Foto ${idx + 1} - ${prodName}" />
                   </button>
                 `).join('')}
               </div>
             ` : ''}
           </div>
 
-          <!-- DIREITA: PAINEL DE COMPRA & PREÇOS -->
-          <div class="product-buy-block">
+          <!-- DIREITA: INFORMAÇÕES DO CATÁLOGO DIGITAL -->
+          <div class="product-buy-block showcase-mode">
             <div class="product-header-info">
               <div class="product-tags-row">
-                <span class="brand-badge">${p.marca || 'JC Informática'}</span>
-                ${p.subcategoria ? `<span class="subcat-tag-badge"><i class="fas fa-layer-group"></i> ${p.subcategoria}</span>` : ''}
-                <span class="sku-tag">SKU: ${prodCode}</span>
-                <span class="stock-status-badge ${p.estoque === 'Sob Encomenda' ? 'pre-order' : 'in-stock'}">
-                  <i class="fas ${p.estoque === 'Sob Encomenda' ? 'fa-clock' : 'fa-check'}"></i> ${p.estoque || 'Disponível'}
+                <span class="brand-badge"><i class="fas fa-tag"></i> ${prodBrand}</span>
+                <span class="stock-status-badge ${isPreOrder ? 'pre-order' : 'in-stock'}">
+                  <i class="fas ${isPreOrder ? 'fa-clock' : 'fa-check'}"></i> ${prodStock}
                 </span>
+                ${warranty ? `
+                  <span class="warranty-pill-tag">
+                    <i class="fas fa-shield-alt"></i> Garantia: ${warranty}
+                  </span>
+                ` : ''}
               </div>
               <h1 class="product-page-title">${prodName}</h1>
-              
-              <!-- TAGS DO PRODUTO -->
-              ${(p.tags && p.tags.length > 0) ? `
-                <div class="product-tags-badges-list" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
-                  ${p.tags.map(t => `<span class="prod-tag-pill">${t}</span>`).join('')}
-                </div>
-              ` : ''}
             </div>
 
-            <!-- QUADRO DE PREÇOS KABUM / APPLE / DELL -->
-            <div class="price-highlight-card">
-              ${formattedOriginal ? `
-                <div class="original-price-row">
-                  De: <span class="old-price">${formattedOriginal}</span>
-                  <span class="discount-pill">Economize ${(priceNum - promoNum).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                </div>
-              ` : ''}
-
-              <div class="pix-price-box">
-                <span class="pix-label">Preço à vista no Pix / Dinheiro:</span>
-                <div class="pix-val">${formattedPrice}</div>
-              </div>
-
-              <div class="card-price-box">
-                <i class="far fa-credit-card"></i> Ou em <strong>${installmentText}</strong> no cartão
-              </div>
+            <!-- DESCRIÇÃO CURTA -->
+            <div class="showcase-short-desc">
+              <p>${shortDesc}</p>
             </div>
 
-            <!-- BOTÃO UNIFICADO WHATSAPP (ÚNICO BOTÃO DE COMPRA) -->
+            <!-- PRINCIPAIS CARACTERÍSTICAS (MÁXIMO 6) -->
+            ${mainFeatures.length > 0 ? `
+              <div class="showcase-features-box">
+                <h3 class="features-box-title"><i class="fas fa-list-check"></i> Principais Características</h3>
+                <ul class="features-bullet-list">
+                  ${mainFeatures.map(feat => `
+                    <li><i class="fas fa-check-circle"></i> <span>${feat}</span></li>
+                  `).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <!-- BOTÃO PRINCIPAL: TENHO INTERESSE NESTE PRODUTO -->
             <div class="product-actions-group">
-              <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp buy-wa-large-btn">
-                <i class="fab fa-whatsapp"></i> Comprar pelo WhatsApp
+              <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp buy-wa-large-btn showcase-primary-btn">
+                <i class="fab fa-whatsapp"></i> 🟢 Tenho interesse neste produto
               </a>
             </div>
 
-            <!-- COMPARTILHAMENTO SOCIAL -->
+            <!-- COMPARTILHAMENTO E FERRAMENTAS PARA EQUIPE DE VENDAS -->
             <div class="social-share-row">
-              <span class="share-label"><i class="fas fa-share-alt"></i> Compartilhar:</span>
-              <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Confira este produto na JC Informática: ' + prodName + ' - ' + pageUrl)}" target="_blank" rel="noopener" class="share-btn share-wa" title="Compartilhar no WhatsApp">
-                <i class="fab fa-whatsapp"></i>
+              <span class="share-label"><i class="fas fa-share-alt"></i> Enviar produto ao cliente:</span>
+              <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Olá! Confira este produto em nossa vitrine digital JC Informática:\n\n*' + prodName + '*\nMarca: ' + prodBrand + '\n' + pageUrl)}" target="_blank" rel="noopener" class="share-btn share-wa" title="Enviar direto pelo WhatsApp">
+                <i class="fab fa-whatsapp"></i> Enviar WhatsApp
               </a>
-              <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}" target="_blank" rel="noopener" class="share-btn share-fb" title="Compartilhar no Facebook">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <button type="button" id="copy-product-link-btn" class="share-btn share-copy" title="Copiar Link">
-                <i class="fas fa-link"></i>
+              <button type="button" id="copy-product-link-btn" class="share-btn share-copy" title="Copiar Link para envio">
+                <i class="fas fa-link"></i> Copiar Link
               </button>
-              <span id="copy-toast" class="copy-toast" style="display:none;">Link copiado!</span>
+              <span id="copy-toast" class="copy-toast" style="display:none;">Link copiado com sucesso!</span>
             </div>
 
-            <!-- VANTAGENS RÁPIDAS LOJA FÍSICA -->
+            <!-- INFORMAÇÕES DE ATENDIMENTO E LOJA FÍSICA -->
             <div class="store-guarantees-grid">
               <div class="guarantee-item">
                 <i class="fas fa-store"></i>
                 <div>
-                  <strong>Retirada na Loja</strong>
-                  <span>Av. 15 de Novembro, 1540 - NP</span>
+                  <strong>Visite Nossa Loja Física</strong>
+                  <span>Av. 15 de Novembro, 1540 – Nova Petrópolis</span>
                 </div>
               </div>
               <div class="guarantee-item">
-                <i class="fas fa-tools"></i>
+                <i class="fas fa-comments"></i>
                 <div>
-                  <strong>Suporte &amp; Teste na Hora</strong>
-                  <span>Bancada técnica presencial</span>
+                  <strong>Atendimento Direto</strong>
+                  <span>Tire dúvidas e consulte disponibilidade pelo WhatsApp</span>
                 </div>
               </div>
             </div>
@@ -217,27 +208,10 @@ export class ProductDetailEngine {
         </div>
       </section>
 
-      <!-- ABAS DE INFORMAÇÕES E ESPECIFICAÇÕES -->
-      <section class="product-specs-section">
-        <div class="container">
-          <div class="specs-tab-wrapper">
-            <h2 class="specs-section-title"><i class="fas fa-list-alt"></i> Especificações Técnicas</h2>
-            
-            <p class="product-description-text">${p.descricao || 'Produto de alta qualidade com garantia de procedência e suporte técnico especializado da JC Informática.'}</p>
-
-            <table class="specs-table">
-              <tbody>
-                ${specsListHTML}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- PRODUTOS RELACIONADOS -->
+      <!-- PRODUTOS RELACIONADOS NA VITRINE -->
       <section class="related-products-section">
         <div class="container">
-          <h2 class="related-section-title"><i class="fas fa-fire"></i> Produtos Relacionados da Mesma Categoria</h2>
+          <h2 class="related-section-title"><i class="fas fa-boxes"></i> Outros Produtos da Vitrine Digital</h2>
           <div class="products-grid" id="related-products-grid"></div>
         </div>
       </section>
@@ -304,19 +278,23 @@ export class ProductDetailEngine {
     let html = '';
     displayList.forEach(p => {
       const prodName = p.nome || p.titulo;
-      const formattedPrice = (p.precoPromocional || p.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const prodBrand = p.marca || 'JC Informática';
+      const prodStock = p.estoque || 'Disponível';
       const productUrl = `produto.html?id=${encodeURIComponent(p.id)}`;
 
       html += `
         <article class="product-card">
           <a href="${productUrl}" class="product-image-wrapper">
+            <span class="stock-badge in-stock"><i class="fas fa-check"></i> ${prodStock}</span>
             <img src="${p.imagem}" alt="${prodName}" loading="lazy" />
           </a>
           <div class="product-info">
+            <div class="product-tags-row">
+              <span class="brand-badge">${prodBrand}</span>
+            </div>
             <h3 class="product-title"><a href="${productUrl}">${prodName}</a></h3>
-            <div class="product-footer">
-              <span class="price-value">${formattedPrice}</span>
-              <a href="${productUrl}" class="btn btn-primary product-buy-btn">Ver Produto</a>
+            <div class="product-footer" style="margin-top: 14px; justify-content: flex-end;">
+              <a href="${productUrl}" class="btn btn-outline" style="width: 100%; text-align: center;">Ver Detalhes</a>
             </div>
           </div>
         </article>

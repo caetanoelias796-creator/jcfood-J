@@ -21,10 +21,10 @@
         <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
       </a>
       <div class="admin-header-title">
-        <i class="fas fa-user-shield"></i> Painel de Gestão de Produtos
+        <i class="fas fa-user-shield"></i> Painel da Vitrine Digital
       </div>
       <a href="produtos" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">
-        <i class="fas fa-store"></i> Ver Loja no Site
+        <i class="fas fa-store"></i> Ver Vitrine no Site
       </a>
     </div>
   </header>
@@ -35,15 +35,15 @@
       <!-- TOP BAR -->
       <div class="admin-top-bar">
         <div>
-          <h1 style="font-family: var(--font-title); font-size: 32px; color: var(--white); text-transform: uppercase;">Dashboard &amp; Catálogo</h1>
-          <p style="color: var(--gray); font-size: 14px;">Cadastre produtos em menos de 30 segundos e gerencie fotos, preços e estoque.</p>
+          <h1 style="font-family: var(--font-title); font-size: 32px; color: var(--white); text-transform: uppercase;">Dashboard &amp; Vitrine Digital</h1>
+          <p style="color: var(--gray); font-size: 14px;">Cadastre produtos em poucos segundos para apresentação no WhatsApp e loja física.</p>
         </div>
         <div style="display: flex; gap: 12px;">
           <button type="button" id="btn-reset-defaults" class="btn btn-outline" title="Restaurar produtos iniciais">
             <i class="fas fa-undo"></i> Reset Padrão
           </button>
           <button type="button" id="btn-open-add-modal" class="btn btn-primary">
-            <i class="fas fa-plus-circle"></i> + Cadastrar Produto (30s)
+            <i class="fas fa-plus-circle"></i> + Cadastrar Produto
           </button>
         </div>
       </div>
@@ -64,9 +64,9 @@
                 <th>Produto / Código</th>
                 <th>Categoria</th>
                 <th>Marca</th>
-                <th>Preço / Promoção</th>
+                <th>Disponibilidade</th>
                 <th>Status</th>
-                <th style="width: 110px;">Ações</th>
+                <th style="width: 130px;">Ações</th>
               </tr>
             </thead>
             <tbody id="admin-products-table-body">
@@ -100,6 +100,7 @@
           <div class="form-field">
             <label>Categoria Principal *</label>
             <select id="input-categoria" required>
+              <option value="">Selecione uma Categoria...</option>
               <option value="computadores">Computadores</option>
               <option value="pc_gamer">PC Gamer</option>
               <option value="notebooks">Notebooks</option>
@@ -115,65 +116,27 @@
             </select>
           </div>
           <div class="form-field">
-            <label>Subcategoria</label>
-            <input type="text" id="input-subcategoria" placeholder="Ex: Teclados, SSD, Processadores, All in One" />
-          </div>
-        </div>
-
-        <div class="form-group-grid">
-          <div class="form-field">
             <label>Marca *</label>
             <input type="text" id="input-marca" required placeholder="Ex: Redragon, Kingston, NZXT, TP-Link" />
           </div>
-          <div class="form-field">
-            <label>Código SKU *</label>
-            <input type="text" id="input-codigo" required placeholder="Ex: JC-RED-001" />
-          </div>
-          <div class="form-field">
-            <label>Código de Barras (EAN)</label>
-            <input type="text" id="input-barras" placeholder="Ex: 789855543201" />
-          </div>
-          <div class="form-field">
-            <label>Ordem</label>
-            <input type="number" id="input-ordem" value="1" min="1" />
-          </div>
         </div>
 
         <div class="form-group-grid">
           <div class="form-field">
-            <label>Preço de Tabela (R$) *</label>
-            <input type="number" step="0.01" id="input-preco" required placeholder="289.90" />
-          </div>
-          <div class="form-field">
-            <label>Preço Promocional Pix (R$) *</label>
-            <input type="number" step="0.01" id="input-preco-promocional" required placeholder="269.90" />
-          </div>
-          <div class="form-field">
-            <label>Parcelamento</label>
-            <input type="text" id="input-parcelamento" placeholder="10x de R$ 28,99 sem juros" />
-          </div>
-          <div class="form-field">
-            <label>Disponibilidade de Estoque</label>
-            <select id="input-estoque">
+            <label>Disponibilidade de Estoque *</label>
+            <select id="input-estoque" required>
               <option value="Disponível">Disponível (Pronta Entrega)</option>
               <option value="Sob Encomenda">Sob Encomenda</option>
               <option value="Fora de Estoque">Fora de Estoque</option>
             </select>
           </div>
-        </div>
-
-        <div class="form-group-grid">
           <div class="form-field">
-            <label>Garantia do Fabricante</label>
+            <label>Garantia (Opcional)</label>
             <input type="text" id="input-garantia" placeholder="Ex: 12 Meses com Fabricante" />
           </div>
           <div class="form-field">
-            <label>Fabricante / Distribuidor</label>
-            <input type="text" id="input-fabricante" placeholder="Ex: Redragon Brasil" />
-          </div>
-          <div class="form-field">
-            <label>Etiquetas / Tags (separadas por vírgula)</label>
-            <input type="text" id="input-tags" placeholder="Ex: Novo, Oferta, Gamer, Recomendado pela JC" />
+            <label>Subcategoria (Opcional)</label>
+            <input type="text" id="input-subcategoria" placeholder="Ex: Teclados, SSD, Processadores" />
           </div>
         </div>
 
@@ -188,13 +151,48 @@
             <span id="upload-status-lbl" style="font-size: 11px; color: var(--gray); margin-top: 4px; display: block;"></span>
           </div>
           <div class="form-field">
-            <label>Sinalizadores &amp; Status</label>
+            <label>Código SKU / Referência (Opcional)</label>
+            <input type="text" id="input-codigo" placeholder="Ex: JC-RED-001" />
+          </div>
+        </div>
+
+        <!-- CAMPO DE PREÇO (AGORA OPCIONAL) -->
+        <div class="form-group-grid">
+          <div class="form-field">
+            <label>Preço de Tabela R$ (Opcional)</label>
+            <input type="number" step="0.01" id="input-preco" placeholder="Opcional - Ex: 289.90" />
+          </div>
+          <div class="form-field">
+            <label>Preço Promocional R$ (Opcional)</label>
+            <input type="number" step="0.01" id="input-preco-promocional" placeholder="Opcional - Ex: 269.90" />
+          </div>
+          <div class="form-field">
+            <label>Ordem na Vitrine</label>
+            <input type="number" id="input-ordem" value="1" min="1" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Galeria de Imagens Adicionais (uma URL por linha, até 8 - Opcional)</label>
+          <textarea id="input-galeria" rows="2" placeholder="imagem/teclado_redragon_2.jpg&#10;imagem/teclado_redragon_3.jpg"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label>Descrição do Produto *</label>
+          <textarea id="input-descricao" required rows="3" placeholder="Resumo claro e profissional sobre o produto para o cliente ler na vitrine digital..."></textarea>
+        </div>
+
+        <div class="form-field">
+          <label>Principais Características * (Máximo 6 itens, um por linha)</label>
+          <textarea id="input-especificacoes" required rows="4" placeholder="Switches Mecânicos Outemu Blue&#10;Iluminação RGB Chroma&#10;Padrão ABNT2 com Ç&#10;Teclas 100% Anti-Ghosting&#10;Cabo Trançado Reforçado de 1.8m"></textarea>
+        </div>
+
+        <div class="form-group-grid" style="margin-top: 10px;">
+          <div class="form-field">
+            <label>Sinalizadores de Exibição</label>
             <div style="display: flex; gap: 14px; margin-top: 6px; flex-wrap: wrap;">
               <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: var(--white);">
-                <input type="checkbox" id="input-destaque" /> Destaque
-              </label>
-              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: var(--white);">
-                <input type="checkbox" id="input-promocao" /> Promoção
+                <input type="checkbox" id="input-destaque" /> Destaque na Vitrine
               </label>
               <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: #00C853; font-weight:700;">
                 <input type="checkbox" id="input-ativo" checked /> Ativo no Site
@@ -203,29 +201,9 @@
           </div>
         </div>
 
-        <div class="form-field">
-          <label>Galeria de Imagens Adicionais (uma URL por linha, até 8)</label>
-          <textarea id="input-galeria" rows="2" placeholder="imagem/teclado_redragon.jpg&#10;imagem/loja_keyboards_real.jpg"></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Resumo Curto (Aparece no topo)</label>
-          <input type="text" id="input-resumo" placeholder="Ex: Padrão ABNT2 com iluminação RGB e switches Outemu Blue..." />
-        </div>
-
-        <div class="form-field">
-          <label>Especificações Técnicas (uma por linha)</label>
-          <textarea id="input-especificacoes" rows="3" placeholder="Padrão ABNT2 com Ç&#10;Switches Mecânicos de Alta Precisão&#10;Iluminação RGB Chroma"></textarea>
-        </div>
-
-        <div class="form-field">
-          <label>Descrição Completa do Produto</label>
-          <textarea id="input-descricao" rows="2" placeholder="Escreva um resumo detalhado sobre o produto..."></textarea>
-        </div>
-
         <div class="admin-modal-footer">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('admin-modal').style.display='none'">Cancelar</button>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Produto</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Produto na Vitrine</button>
         </div>
       </form>
     </div>
