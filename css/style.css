@@ -4071,6 +4071,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: 3px 10px;
   border-radius: 12px;
   font-weight: 600;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .showcase-short-desc {
